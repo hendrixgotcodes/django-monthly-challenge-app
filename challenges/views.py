@@ -1,17 +1,36 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+
+
+monthly_challenges = {
+    "january": "till kitchen value struck poemze front knowledge wish",
+    "february": "twicart hidden while pair putting put score way able",
+    "march": "hardly death piece essential else two girl",
+    "april": "ground gave buried mighty ne tight speech process height trace surprise",
+    "may": "steam wore idea grass arrive et",
+    "june": "wild city construction jar  break direct its",
+    "july": "visit room race fellow p thou no aid",
+    "august": "several steam plan allnt heard equator frequently establish",
+    "september": "birthday surprise bated jet pull stick upward up fast",
+    "october": "brother people love sre community equally sail forty",
+    "november": "made rocket frighten refer later likely use late",
+    "december": "breathing atom machidly show may dirty lunch sky",
+}
+
 
 # Create your views here.
 def monthly_challenge_by_number(request, month):
-    return HttpResponse(month)
+    months = list(monthly_challenges.keys())
+    if(month > 12 or month < 0):
+        return HttpResponseNotFound("not found")
+
+    forward_month = months[month]
+    return HttpResponseRedirect("/challenges/"+ forward_month-1)
+
 
 def monthly_challenge(request, month):
-    if(month.lower() == "january"):
-        return HttpResponse("January")
-    elif(month.lower() == "february"):
-        return HttpResponse("february")
-    elif(month.lower() == "march"):
-        return HttpResponse("march")
-    else:
-        return HttpResponseNotFound("This month is not supported")
-        
+    try:
+        text = monthly_challenges[month]
+        return HttpResponse(text)
+    except:
+        return HttpResponseNotFound("not found")
