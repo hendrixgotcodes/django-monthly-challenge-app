@@ -22,7 +22,7 @@ monthly_challenges = {
 def monthly_challenge_by_number(request, month):
     months = list(monthly_challenges.keys())
     if(month > 12 or month < 0):
-        return HttpResponseNotFound("not found")
+        return HttpResponseNotFound("<h1>Not found</h1>")
 
     forward_month = months[month]
     forwarded_path = reverse("month-challenge", args=[forward_month])
@@ -32,6 +32,6 @@ def monthly_challenge_by_number(request, month):
 def monthly_challenge(request, month):
     try:
         text = monthly_challenges[month]
-        return HttpResponse(text)
+        return HttpResponse(f"<h1>{text}</h1>")
     except:
-        return HttpResponseNotFound("not found")
+        return HttpResponseNotFound("<h1>Not found</h1>")
